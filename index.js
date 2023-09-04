@@ -30,7 +30,8 @@ app.use(morgan('combined', {stream: accessLogStream}));
 //mongoose.connect('mongodb://localhost:27017/myBakeAffair', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // MongoDB connection
-const databaseUrl = 'mongodb://localhost:27017/myBakeAffair';
+// const databaseUrl = 'mongodb://localhost:27017/myBakeAffair';
+const databaseUrl = 'mongodb://localhost:27017/';
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true
