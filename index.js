@@ -32,25 +32,24 @@ app.use(morgan('combined', {stream: accessLogStream}));
 // MongoDB connection
 // const databaseUrl = 'mongodb://localhost:27017/myBakeAffair';
 // const databaseUrl = 'mongodb://localhost:27017/';
-// const databaseUrl = 'mongodb+srv://chikighosh80:Tina%401234567@cluster0.nqfrvs4.mongodb.net/'
-// const databaseUrl = 'mongodb+srv://chikighosh80:Tina@1234567@cluster0.nqfrvs4.mongodb.net/myBakeAffair?retryWrites=true&w=majority';
-// const options = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// };
+const databaseUrl = 'mongodb+srv://chikighosh80:Tina%401234567@cluster0.nqfrvs4.mongodb.net/'
+//const databaseUrl = 'mongodb+srv://chikighosh80:Tina@1234567@cluster0.nqfrvs4.mongodb.net/myBakeAffair?retryWrites=true&w=majority';
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+};
 
-// mongoose
-//   .connect(databaseUrl, options)
-//   .then(() => {
-//     console.log('Connected to MongoDB database.');
-//   })
-//   .catch((error) => {
-//     console.error('Error connecting to MongoDB:', error);
-//   });
+mongoose
+  .connect(databaseUrl, options)
+  .then(() => {
+    console.log('Connected to MongoDB database.');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
 
 // mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose.connect('mongodb+srv://chikighosh80:Tina@1234567@cluster0.nqfrvs4.mongodb.net/myBakeAffair?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://mybakeaffair.onrender.com'];
 
