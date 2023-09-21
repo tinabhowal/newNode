@@ -27,28 +27,23 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 // setup the logger
 app.use(morgan('combined', {stream: accessLogStream}));
 
-//mongoose.connect('mongodb://localhost:27017/myBakeAffair', { useNewUrlParser: true, useUnifiedTopology: true });
+const connectionUri = process.env.CONNECTION_URI;
 
-// MongoDB connection
-// const databaseUrl = 'mongodb://localhost:27017/myBakeAffair';
-// const databaseUrl = 'mongodb://localhost:27017/';
-const databaseUrl = 'mongodb+srv://chikighosh80:Tina%401234567@cluster0.nqfrvs4.mongodb.net/'
-//const databaseUrl = 'mongodb+srv://chikighosh80:Tina@1234567@cluster0.nqfrvs4.mongodb.net/myBakeAffair?retryWrites=true&w=majority';
-const options = {
+// Configure MongoDB options
+const mongoOptions = {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 };
 
+// Connect to MongoDB Atlas
 mongoose
-  .connect(databaseUrl, options)
+  .connect(connectionUri, mongoOptions)
   .then(() => {
-    console.log('Connected to MongoDB database.');
+    console.log('Connected to MongoDB Atlas');
   })
   .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
+    console.error('Error connecting to MongoDB Atlas:', error);
   });
-
-// mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://mybakeaffair.onrender.com'];
