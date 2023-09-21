@@ -60,7 +60,7 @@ app.use(cors({
   }
 }));
 
-mongoose.connect('mongodb+srv://chikighosh80:Tina@5@cluster0.2fnxanz.mongodb.net/myBakeAffair?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://chikighosh80:Tina5@cluster0.2fnxanz.mongodb.net/myBakeAffair?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
   
   // GET requests
   app.get('/',  (req, res) => {
@@ -369,46 +369,6 @@ app.delete('/users/:Username/cart', passport.authenticate('jwt', { session: fals
 
 
 
-//   // Add a new user
-// app.post('/users',
-// // Express validator to validate input on the server side
-// [
-//   check('Username', 'Username is required').isLength({ min: 5 }),
-//   check('Username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
-//   check('Password', 'Password is required').not().isEmpty(),
-//   check('Email', 'Email does not appear to be valid').isEmail()
-// ],
-// async (req, res) => {
-//   // Check the validation object for errors
-//   let errors = validationResult(req);
-//   if (!errors.isEmpty()) {
-//     return res.status(422).json({ errors: errors.array() });
-//   }
-
-//   let hashedPassword = Users.hashPassword(req.body.Password);
-
-//   try {
-//     const existingUser = await Users.findOne({ Username: req.body.Username });
-
-//     if (existingUser) {
-//       // If the user is found, send a response that it already exists
-//       return res.status(400).send(req.body.Username + ' already exists');
-//     }
-
-//     const newUser = await Users.create({
-//       Username: req.body.Username,
-//       Password: hashedPassword,
-//       Email: req.body.Email,
-//       Birthday: req.body.Birthday
-//     });
-
-//     res.status(201).json(newUser);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Error: ' + error);
-//   }
-// }
-// );
 
 
 
@@ -447,3 +407,4 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
   app.listen(port, '0.0.0.0',() => {
   console.log('Listening on Port ' + port);
   });
+
