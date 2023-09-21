@@ -32,7 +32,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 // MongoDB connection
 // const databaseUrl = 'mongodb://localhost:27017/myBakeAffair';
 // const databaseUrl = 'mongodb://localhost:27017/';
-const databaseUrl = 'mongodb+srv://chikighosh80:Tina@1234567@cluster0.nqfrvs4.mongodb.net/myBakeAffair?retryWrites=true&w=majority'
+const databaseUrl = 'mongodb+srv://chikighosh80:Tina%401234567@cluster0.nqfrvs4.mongodb.net/'
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true
