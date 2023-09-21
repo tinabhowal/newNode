@@ -45,7 +45,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 //     console.error('Error connecting to MongoDB Atlas:', error);
 //   });
 
-mongoose.connect('mongodb+srv://chikighosh80:Tina@5@cluster0.2fnxanz.mongodb.net/myBakeAffair?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://mybakeaffair.onrender.com'];
 
@@ -60,6 +60,7 @@ app.use(cors({
   }
 }));
 
+mongoose.connect('mongodb+srv://chikighosh80:Tina@5@cluster0.2fnxanz.mongodb.net/myBakeAffair?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
   
   // GET requests
   app.get('/',  (req, res) => {
