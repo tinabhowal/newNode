@@ -27,24 +27,25 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 // setup the logger
 app.use(morgan('combined', {stream: accessLogStream}));
 
-const connectionUri = process.env.CONNECTION_URI;
+// const connectionUri = process.env.CONNECTION_URI;
 
-// Configure MongoDB options
-const mongoOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+// // Configure MongoDB options
+// const mongoOptions = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// };
 
-// Connect to MongoDB Atlas
-mongoose
-  .connect(connectionUri, mongoOptions)
-  .then(() => {
-    console.log('Connected to MongoDB Atlas');
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB Atlas:', error);
-  });
+// // Connect to MongoDB Atlas
+// mongoose
+//   .connect(connectionUri, mongoOptions)
+//   .then(() => {
+//     console.log('Connected to MongoDB Atlas');
+//   })
+//   .catch((error) => {
+//     console.error('Error connecting to MongoDB Atlas:', error);
+//   });
 
+mongoose.connect('mongodb+srv://chikighosh80:Tina@5@cluster0.2fnxanz.mongodb.net/myBakeAffair?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://mybakeaffair.onrender.com'];
 
