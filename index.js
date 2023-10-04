@@ -442,25 +442,6 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 // setup the logger
 app.use(morgan('combined', {stream: accessLogStream}));
 
-// const connectionUri = process.env.CONNECTION_URI;
-
-// // Configure MongoDB options
-// const mongoOptions = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// };
-
-// // Connect to MongoDB Atlas
-// mongoose
-//   .connect(connectionUri, mongoOptions)
-//   .then(() => {
-//     console.log('Connected to MongoDB Atlas');
-//   })
-//   .catch((error) => {
-//     console.error('Error connecting to MongoDB Atlas:', error);
-//   });
-
-
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://mybakeaffair.onrender.com'];
 
@@ -663,47 +644,78 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), as
 });
 
 //Update a user's info, by username
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), 
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
 
-[
   check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()
-],
 
+], async (req, res) => {
 
-async (req, res) => {
-  
-  // Check the validation object for errors
-   const errors = validationResult(req);
-   if (!errors.isEmpty()) {
-     return res.status(422).json({ errors: errors.array() });
-   }
+  // Check if the user has a password (i.e., a local account)
+  if (req.user.Password) {
+    
+    // Validate the request for local account updates
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
 
-  // CONDITION TO CHECK ADDED HERE
-  if(req.user.Username !== req.params.Username){
+    // CONDITION TO CHECK ADDED HERE
+    if (req.user.Username !== req.params.Username) {
       return res.status(400).send('Permission denied');
-  }
-  // CONDITION ENDS
-  await Users.findOneAndUpdate({ Username: req.params.Username }, {
-      $set:
-      {
-          Username: req.body.Username,
-          Password: req.body.Password,
-          Email: req.body.Email,
-          Birthday: req.body.Birthday
-      }
-  },
-      { new: true }) // This line makes sure that the updated document is returned
+    }
+    // CONDITION ENDS
+
+    // Update the user's information for local accounts
+    await Users.findOneAndUpdate({ Username: req.params.Username }, {
+      $set: {
+        Username: req.body.Username,
+        Email: req.body.Email,
+        // Update with your desired fields
+      },
+    }, { new: true })
       .then((updatedUser) => {
-          res.json(updatedUser);
+        res.json(updatedUser);
       })
       .catch((err) => {
-          console.log(err);
+        console.log(err);
+        res.status(500).send('Error: ' + err);
+      });
+
+  } else {
+    // Update the user's information for Google OAuth accounts
+
+    // Find the user in your database based on their Google ID (which you stored during the OAuth authentication)
+    const googleId = req.user.GoogleID;
+
+    if (googleId) {
+      Users.findOneAndUpdate(
+        { GoogleID: googleId },
+        {
+          $set: {
+            FirstName: req.body.FirstName, // Update with your desired fields
+            LastName: req.body.LastName,
+            Email: req.body.Email,
+            // Add other fields you want to update here
+          },
+        },
+        { new: true }
+      )
+        .then((updatedUser) => {
+          if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found.' });
+          }
+          res.json(updatedUser);
+        })
+        .catch((err) => {
+          console.error(err);
           res.status(500).send('Error: ' + err);
-      })
+        });
+    }
+  }
 });
+
 
   
 // Add a cake to the user's cart with customization options

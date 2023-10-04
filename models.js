@@ -26,7 +26,8 @@ let cartItemSchema = mongoose.Schema({
 // Schema for users
 let userSchema = mongoose.Schema({
     Username: {type: String, required: true},
-    Password: {type: String, required: true},
+    // Password: {type: String, required: true},
+    Password: { type: String, required: function () { return !this.GoogleID } }, // Required for local users only
     Email: {type: String, required: true},
     Birthday: Date,
     Cart: [cartItemSchema], // Array to store cart items
