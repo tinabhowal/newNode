@@ -108,8 +108,13 @@ router.get(
     res.header('Authorization', `Bearer ${token}`);
 
     // Send a JSON response with the user and token
-    res.json({ user: req.user, token });
+    //res.json({ user: req.user, token });
+
+    // Send a simple success message
+    res.status(200).send('You have logged in');
   }
 );
 };
 
+//check in the browser
+//https://mybakeaffair.onrender.com/auth/google
