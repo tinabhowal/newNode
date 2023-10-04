@@ -105,7 +105,7 @@ router.get(
     const token = generateJWTToken(req.user.toJSON());
 
     // Set the "Authorization" header with the token value
-    //res.header('Authorization', `Bearer ${token}`);
+    res.header('Authorization', `Bearer ${token}`);
 
     // Send a JSON response with the user and token
     res.json({ user: req.user, token });
