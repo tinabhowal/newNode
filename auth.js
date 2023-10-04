@@ -86,13 +86,30 @@ module.exports = (router) => {
     passport.authenticate('google', { scope: ['profile', 'email'] })
   );
 
-  // Google OAuth2 callback route
-  router.get(
-    '/auth/google/callback',
-    passport.authenticate('google', { session: false }),
-    (req, res) => {
-      const token = generateJWTToken(req.user.toJSON());
-      res.json({ user: req.user, token });
-    }
-  );
+//   // Google OAuth2 callback route
+//   router.get(
+//     '/auth/google/callback',
+//     passport.authenticate('google', { session: false }),
+//     (req, res) => {
+//       const token = generateJWTToken(req.user.toJSON());
+//       res.json({ user: req.user, token });
+//     }
+//   );
+// };
+
+// Google OAuth2 callback route
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { session: false }),
+  (req, res) => {
+    const token = generateJWTToken(req.user.toJSON());
+
+    // Set the "Authorization" header with the token value
+    res.header('Authorization', `Bearer ${token}`);
+
+    // Send a JSON response with the user and token
+    res.json({ user: req.user, token });
+  }
+);
 };
+
