@@ -29,7 +29,8 @@ let userSchema = mongoose.Schema({
     Password: {type: String, required: true},
     Email: {type: String, required: true},
     Birthday: Date,
-    Cart: [cartItemSchema] // Array to store cart items
+    Cart: [cartItemSchema], // Array to store cart items
+    GoogleID: String,
 });
 
 userSchema.statics.hashPassword = (password) => {

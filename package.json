@@ -26,9 +26,10 @@
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.1",
     "lodash": "^4.17.21",
-    "mongoose": "^7.5.0", 
+    "mongoose": "^7.5.0",
     "morgan": "^1.10.0",
     "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "uuid": "^9.0.0"
@@ -37,6 +38,6 @@
     "eslint": "^8.45.0"
   },
   "engines": {
-    "node": "14.20.1" 
+    "node": "14.20.1"
   }
 }
